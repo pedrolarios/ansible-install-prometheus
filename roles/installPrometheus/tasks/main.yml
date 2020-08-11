@@ -32,3 +32,13 @@
   with_items:
     - /tmp/prometheus-2.17.1.linux-amd64/prometheus
     - /tmp/prometheus-2.17.1.linux-amd64/promtool 
+
+- name: Recursively remove temporary directory
+  file:
+    path: /tmp/prometheus-2.17.1.linux-amd64
+    state: absent
+
+- name: Remove temporary file 
+  file:
+    path: /tmp/prometheus-2.17.1.linux-amd64.tar.gz
+    state: absent    

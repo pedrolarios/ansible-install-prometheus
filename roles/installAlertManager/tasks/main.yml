@@ -33,3 +33,13 @@
   with_items:
     - /tmp/alertmanager-0.16.1.linux-amd64/alertmanager
     - /tmp/alertmanager-0.16.1.linux-amd64/amtool 
+
+- name: Recursively remove temporary directory
+  file:
+    path: /tmp/alertmanager-0.16.1.linux-amd64
+    state: absent
+
+- name: Remove temporary file 
+  file:
+    path: /tmp/alertmanager-0.16.1.linux-amd64.tar.gz
+    state: absent    
