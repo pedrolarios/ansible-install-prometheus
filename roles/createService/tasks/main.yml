@@ -1,0 +1,22 @@
+---
+- name: Create service 
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dst }}"
+    mode:  u=rwxr,g=xr,o=r  
+  with_items:
+    - {src: 'prometheus.j2',dst: '/etc/systemd/system/prometheus.service'}
+    - {src: 'alertmanager.j2',dst: '/etc/systemd/system/alertmanager.service'}
+
+- name: Reload systemctl
+  command: systemctl daemon-reload  
+
+- name: Start Services 
+  service: 
+    name: "{{ item }}" 
+    state: started
+    enabled: yes     
+  with_items:
+    - prometheus.service
+    - alertmanager.service  
+  

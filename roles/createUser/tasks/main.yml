@@ -1,0 +1,17 @@
+---
+- name: Add a groups 
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - prometheus
+  - alertmanager
+    
+- name: Add the users
+  user:
+    name: "{{ item }}"
+    shell: /bin/false
+    group: "{{ item }}"
+  with_items:
+  - prometheus
+  - alertmanager

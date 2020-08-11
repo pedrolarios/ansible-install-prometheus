@@ -1,0 +1,15 @@
+---
+- name: Clone repository prometheus configuration
+  git:
+    repo: https://github.com/pedrolarios/ansible-install-prometheus.git
+    dest: /tmp/prometheus/
+    update: yes
+
+- name: Move the prometheus file 
+  copy: 
+    src: /tmp/prometheus/prometheus.yml
+    dest: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    group: prometheus
+    remote_src: yes
+    force: yes

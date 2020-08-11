@@ -1,0 +1,34 @@
+---
+- name: Copy the prometheus file 
+  copy: 
+    src:  prometheus-2.17.1.linux-amd64.tar.gz
+    dest: /tmp/
+
+- name: Extract prometheus
+  unarchive:
+    src: /tmp/prometheus-2.17.1.linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Move the prometheus file 
+  copy: 
+    src: "{{ item }}"
+    dest: /etc/prometheus
+    owner: prometheus
+    group: prometheus
+    remote_src: yes
+  with_items:
+    - /tmp/prometheus-2.17.1.linux-amd64/console_libraries
+    - /tmp/prometheus-2.17.1.linux-amd64/consoles 
+
+- name: Move the prometheus binaries 
+  copy: 
+    src: "{{ item }}"
+    dest: /usr/local/bin 
+    owner: prometheus
+    group: prometheus
+    remote_src: yes
+    mode:  u=rwxr,g=xr,o=xr
+  with_items:
+    - /tmp/prometheus-2.17.1.linux-amd64/prometheus
+    - /tmp/prometheus-2.17.1.linux-amd64/promtool 

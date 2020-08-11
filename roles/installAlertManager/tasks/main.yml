@@ -1,0 +1,35 @@
+---
+- name: Copy the alertManager file 
+  copy: 
+    src:  alertmanager-0.16.1.linux-amd64.tar.gz
+    dest: /tmp/
+
+- name: Extract alertManager
+  unarchive:
+    src: /tmp/alertmanager-0.16.1.linux-amd64.tar.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Move the alertManager file 
+  copy: 
+    src: "{{ item }}"
+    dest: /etc/alertmanager
+    owner: alertmanager
+    group: alertmanager
+    remote_src: yes
+    mode:  u=rw,g=r,o=r
+  with_items:
+    - /tmp/alertmanager-0.16.1.linux-amd64/alertmanager.yml
+
+
+- name: Move the alertManager binaries 
+  copy: 
+    src: "{{ item }}"
+    dest: /usr/local/bin 
+    owner: alertmanager
+    group: alertmanager
+    remote_src: yes
+    mode:  u=rwxr,g=xr,o=xr
+  with_items:
+    - /tmp/alertmanager-0.16.1.linux-amd64/alertmanager
+    - /tmp/alertmanager-0.16.1.linux-amd64/amtool 

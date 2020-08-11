@@ -1,0 +1,15 @@
+---
+ - name: Install Prometheus
+   hosts: all
+   roles:
+      - createUser
+      - createDir
+      - installPrometheus
+      - installAlertManager
+      - cloneConfig
+      - createService
+      
+      
+
+
+   
